@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: github-actions-edit-binding
+  namespace: jelles-workspace-nodejs-jelle-dev
+subjects:
+  - kind: ServiceAccount
+    name: github-actions
+    namespace: jelles-workspace-nodejs-jelle-dev
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
