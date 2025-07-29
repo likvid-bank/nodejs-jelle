@@ -29,38 +29,14 @@ jobs:
       - name: Deploy to AKS
         env:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           echo "$KUBECONFIG_CONTENT" > kubeconfig
-          cat > deployment.yml <<EOF
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: nodejs-jelle
-            namespace: jelles-workspace-nodejs-jelle-dev
-            labels:
-              app: nodejs-jelle
-          spec:
-            replicas: 1
-            selector:
-              matchLabels:
-                app: nodejs-jelle
-            template:
-              metadata:
-                labels:
-                  app: nodejs-jelle
-              spec:
-                containers:
-                  - name: nodejs-jelle
-                    image: githubconnector.azurecr.io/nodejs-jelle:${{ github.sha }}
-                    resources:
-                      requests:
-                        memory: "48Mi"
-                        cpu: "25m"
-                      limits:
-                        memory: "64Mi"
-                        cpu: "100m"
-                imagePullSecrets:
-                  - name: acr-image-pull
-          EOF
+          
+          for f in k8s/*.yml.template; do
+            out="${f%.template}"
+            echo "Generating $out from $f"
+            envsubst < "$f" > "$out"
+          done
 
-          kubectl --kubeconfig ./kubeconfig apply -f deployment.yml
+          kubectl --kubeconfig ./kubeconfig apply -f k8s/
