@@ -19,24 +19,25 @@ jobs:
           username: ${{ secrets.aks_container_registry_username }}
           password: ${{ secrets.aks_container_registry_password }}
 
-      - name: Build and push
+      # 🔧 Build & push backend (Node.js)
+      - name: Build and push backend
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./backend
           push: true
-          tags: githubconnector.azurecr.io/nodejs-jelle:${{ github.sha }}
+          tags: githubconnector.azurecr.io/nodejs-jelle-backend:v0.0.1
+
+      # 🔧 Build & push frontend (Angular)
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: githubconnector.azurecr.io/nodejs-jelle-frontend:v0.0.1
 
       - name: Deploy to AKS
         env:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG }}
-          GITHUB_SHA: ${{ github.sha }}
         run: |
           echo "$KUBECONFIG_CONTENT" > kubeconfig
-          
-          for f in k8s/*.yml.template; do
-            out="${f%.template}"
-            echo "Generating $out from $f"
-            envsubst < "$f" > "$out"
-          done
-
-          kubectl --kubeconfig ./kubeconfig apply -f k8s/
+          kubectl --kubeconfig ./kubeconfig apply -f k8s/ -n jelles-workspace-nodejs-jelle-dev

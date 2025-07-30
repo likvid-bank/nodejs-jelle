@@ -1,23 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-jelle
-  namespace: jelles-workspace-nodejs-jelle-dev
-  labels:
-    app: nodejs-jelle
+  name: nodejs-backend
+  namespace: jelles-workspace-nodejs-jelle-dev # Todo remove this and move
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodejs-jelle
+      app: nodejs
   template:
     metadata:
       labels:
-        app: nodejs-jelle
+        app: nodejs
     spec:
       containers:
-        - name: nodejs-jelle
-          image: githubconnector.azurecr.io/nodejs-jelle:$GITHUB_SHA
+        - name: nodejs
+          image: githubconnector.azurecr.io/nodejs-jelle-backend:v0.0.1
           resources:
             requests:
               memory: "48Mi"
@@ -25,5 +23,7 @@ spec:
             limits:
               memory: "64Mi"
               cpu: "100m"
+          ports:
+            - containerPort: 3000
       imagePullSecrets:
         - name: acr-image-pull

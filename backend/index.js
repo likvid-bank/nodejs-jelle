@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,11 @@ const compliments = [
 ];
 
 let visitorCount = 0;
+
+// Allow requests from localhost:4200 (your Angular dev server)
+app.use(cors({
+    origin: 'http://localhost:4200',
+}));
 
 app.get('/', (req, res) => {
     visitorCount++;

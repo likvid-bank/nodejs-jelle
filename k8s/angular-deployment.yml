@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-frontend
+  namespace: jelles-workspace-nodejs-jelle-dev # Todo remove this and move
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular
+  template:
+    metadata:
+      labels:
+        app: angular
+    spec:
+      containers:
+        - name: angular
+          image: githubconnector.azurecr.io/nodejs-jelle-frontend:v0.0.1
+          resources:
+            requests:
+              memory: "48Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+      imagePullSecrets:
+        - name: acr-image-pull
