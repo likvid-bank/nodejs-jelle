@@ -1,14 +1,15 @@
-name: jelles-workspace-nodejs-jelle-dev
+name: k8s-deploy
 
 on:
   push:
     branches:
       - main
+      - release
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: jelles-workspace-nodejs-jelle-dev
+    environment: ${{ github.ref == 'refs/heads/release' && 'jelles-workspace-nodejs-jelle-prod' || 'jelles-workspace-nodejs-jelle-dev' }}
     steps:
       - uses: actions/checkout@v4
 
