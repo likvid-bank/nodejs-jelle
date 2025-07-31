@@ -40,6 +40,7 @@ jobs:
         env:
           KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG }}
           IMAGE_TAG: ${{ github.sha }}
+          DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
         run: |
           echo "$KUBECONFIG_CONTENT" > kubeconfig
           for file in k8s/*.yml; do
