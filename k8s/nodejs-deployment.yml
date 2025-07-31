@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nodejs
-          image: githubconnector.azurecr.io/nodejs-jelle-backend:v0.0.1
+          image: githubconnector.azurecr.io/nodejs-jelle-backend:${IMAGE_TAG}
           resources:
             requests:
               memory: "48Mi"

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: angular
-          image: githubconnector.azurecr.io/nodejs-jelle-frontend:v0.0.1
+          image: githubconnector.azurecr.io/nodejs-jelle-frontend:${IMAGE_TAG}
           resources:
             requests:
               memory: "48Mi"
