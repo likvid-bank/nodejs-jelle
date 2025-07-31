@@ -9,5 +9,5 @@ RUN ng build --configuration=production
 
 # Host
 FROM nginx:latest
-COPY --from=build app/dist/nodejs-jelle/browser /usr/share/nginx/html
+COPY --from=build app/dist/my-angular-app/browser /usr/share/nginx/html
 EXPOSE 80
