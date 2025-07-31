@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: angular-frontend
-  namespace: jelles-workspace-nodejs-jelle-dev # Todo remove this and move
 spec:
   replicas: 1
   selector:
