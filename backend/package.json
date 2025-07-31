@@ -1,5 +1,5 @@
 {
-  "name": "k8s-starter-app",
+  "name": "my-nodejs-api",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {

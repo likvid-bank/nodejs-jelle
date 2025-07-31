@@ -15,7 +15,7 @@ export class App implements OnInit {
   private baseUrl = environment.apiUrl;
   public data!: Observable<any>;
 
-  protected readonly title = signal('nodejs-jelle');
+  protected readonly title = signal('my-angular-app');
 
   constructor(private http: HttpClient) {}
 
