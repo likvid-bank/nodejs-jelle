@@ -42,9 +42,7 @@ jobs:
         run: |
           echo "$KUBECONFIG_CONTENT" > kubeconfig
           
-          for file in *.yml; do
+          for file in k8s/*.yml; do
             echo "Applying $file with IMAGE_TAG=$IMAGE_TAG"
-            envsubst < "$file" | kubectl apply -f -
+            envsubst < "$file" | kubectl --kubeconfig ./kubeconfig apply -f -n jelles-workspace-nodejs-jelle-dev -
           done
-          
-          kubectl --kubeconfig ./kubeconfig apply -f k8s/ -n jelles-workspace-nodejs-jelle-dev
