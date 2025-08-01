@@ -9,8 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/release' && 'jelles-workspace-nodejs-jelle-prod' || 'jelles-workspace-nodejs-jelle-dev' }}
-    # TODO for the template we need to get rid of the project name in the environment
+    environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
     steps:
       - uses: actions/checkout@v4
 
