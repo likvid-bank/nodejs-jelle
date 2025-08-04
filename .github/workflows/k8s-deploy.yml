@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - release
+  workflow_dispatch:
+    # This allows manual triggering of the workflow from the GitHub UI or API.
 
 jobs:
   # This checks if the environment is ready for deployment.
@@ -25,6 +27,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: needs.check-environment.outputs.ready == 'true'
     environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
     steps:
       - uses: actions/checkout@v4
