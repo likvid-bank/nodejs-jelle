@@ -7,6 +7,22 @@ on:
       - release
 
 jobs:
+  # This checks if the environment is ready for deployment.
+  # When initially creating the repository, the secrets will not be ready yet.
+  # Once the environment variables are there you can delete this entire job.
+  check-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - id: check
+        run: |
+          if [ -z "${{ secrets.aks_container_registry_host }}" ]; then
+            echo "ready=false" >> $GITHUB_OUTPUT
+          else
+            echo "ready=true" >> $GITHUB_OUTPUT
+          fi
+
   deploy:
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
