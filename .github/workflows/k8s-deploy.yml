@@ -24,8 +24,10 @@ jobs:
         run: |
           echo $AKS_SECRET
           if [ -z "$AKS_SECRET" ]; then
+            echo "AKS_SECRET is not set. The environment is not ready for deployment."
             echo "ready=false" >> $GITHUB_OUTPUT
           else
+            echo "AKS_SECRET is set. The environment is ready for deployment."
             echo "ready=true" >> $GITHUB_OUTPUT
           fi
 
