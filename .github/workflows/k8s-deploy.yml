@@ -15,8 +15,6 @@ jobs:
   check-environment:
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'jelles-workspace-nodejs-jelle-dev' }}
-    outputs:
-      ready: ${{ steps.check.outputs.ready }}
     steps:
       - id: check
         env:
@@ -30,9 +28,12 @@ jobs:
             echo "AKS_SECRET is set. The environment is ready for deployment."
             echo "ready=true" >> $GITHUB_OUTPUT
           fi
+        outputs:
+          ready: ${{ steps.check.outputs.ready }}
 
   deploy:
     runs-on: ubuntu-latest
+    needs: check-environment
     if: needs.check-environment.outputs.ready == 'true'
     environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'jelles-workspace-nodejs-jelle-dev' }}
     steps:
