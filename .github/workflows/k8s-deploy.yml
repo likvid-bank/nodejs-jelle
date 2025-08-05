@@ -19,8 +19,10 @@ jobs:
       ready: ${{ steps.check.outputs.ready }}
     steps:
       - id: check
+        env:
+          AKS_SECRET: ${{ secrets.aks_container_registry_host }}
         run: |
-          if [ -z "${{ secrets.aks_container_registry_host }}" ]; then
+          if [ -z "$AKS_SECRET" ]; then
             echo "ready=false" >> $GITHUB_OUTPUT
           else
             echo "ready=true" >> $GITHUB_OUTPUT
