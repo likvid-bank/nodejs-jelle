@@ -22,6 +22,7 @@ jobs:
         env:
           AKS_SECRET: ${{ secrets.aks_container_registry_host }}
         run: |
+          echo $AKS_SECRET
           if [ -z "$AKS_SECRET" ]; then
             echo "ready=false" >> $GITHUB_OUTPUT
           else
