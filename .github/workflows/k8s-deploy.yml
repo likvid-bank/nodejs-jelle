@@ -14,7 +14,7 @@ jobs:
   # Once the environment variables are there you can delete this entire job.
   check-environment:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
+    environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'jelles-workspace-nodejs-jelle-dev' }}
     outputs:
       ready: ${{ steps.check.outputs.ready }}
     steps:
@@ -31,7 +31,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: needs.check-environment.outputs.ready == 'true'
-    environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
+    environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'jelles-workspace-nodejs-jelle-dev' }}
     steps:
       - uses: actions/checkout@v4
 
