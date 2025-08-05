@@ -14,6 +14,7 @@ jobs:
   # Once the environment variables are there you can delete this entire job.
   check-environment:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/release' && 'production' || 'development' }}
     outputs:
       ready: ${{ steps.check.outputs.ready }}
     steps:
